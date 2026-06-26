@@ -39,9 +39,26 @@ const sortByTimeAsc=(transactions)=>{
         return at.getTime()-bt.getTime();
     });
 };
+const parseRelativeTime = (text, baseTime) => {
+    const now = baseTime ? new Date(baseTime) : new Date();
+    const normalized = String(text || "").toLowerCase();
+
+    if (normalized.includes("today") || normalized.includes("আজ")) {
+        return new Date(now.setHours(12, 0, 0, 0));
+    }
+
+    if (normalized.includes("yesterday") || normalized.includes("yester day") || normalized.includes("yester-day") || normalized.includes("গত কাল") || normalized.includes("গতকাল")) {
+        const yesterday = new Date(now);
+        yesterday.setDate(now.getDate() - 1);
+        return new Date(yesterday.setHours(12, 0, 0, 0));
+    }
+
+    return null;
+};
 
 module.exports={
     toTime,
     secondsBetween,
-    sortByTimeAsc
+    sortByTimeAsc,
+    parseRelativeTime
 };

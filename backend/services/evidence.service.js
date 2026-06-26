@@ -119,15 +119,21 @@ const findRelevantTransaction=(transactions,caseType,signals)=>{
 
     const top=scored[0];
     const second=scored[1];
-    const threshold=signals.amounts.length?5:4;
+    const threshold = signals.amounts.length ? 5 : 4;
 
     if(top.score<threshold){
         return {transaction:null,ambiguous:false};
     }
 
-    if(second&&Math.abs(top.score-second.score)<=1&&!signals.counterpartyHints.length){
-        return {transaction:null,ambiguous:true};
+    if(second&&Math.abs(top.score-second.score)<=1){
+        if(!signals.counterpartyHints || !signals.counterpartyHints.length){
+            return {
+                transaction:null,
+                ambiguous:true
+            };
+        }
     }
+    // ------------------------------------------
 
     return {
         transaction:top.transaction,
@@ -156,7 +162,7 @@ const scoreTransaction=(transaction,caseType,signals)=>{
         score+=2;
     }
 
-    if(signals.counterpartyHints.length){
+    if(signals.counterpartyHints&&signals.counterpartyHints.length){
         const txCounterparty=normalizeCounterparty(transaction.counterparty);
 
         if(signals.counterpartyHints.includes(txCounterparty)){
