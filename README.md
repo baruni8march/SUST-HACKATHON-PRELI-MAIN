@@ -1,5 +1,11 @@
 # QueueStorm Investigator
 
+# LIVE DEPLOY link:
+https://sust-hackathon-preli-main-1.onrender.com/health
+
+#  REPOSITORY LINK:
+https://github.com/baruni8march/SUST-HACKATHON-PRELI-MAIN/tree/main
+
 ## Overview
 
 QueueStorm Investigator is a backend API built for the **SUST CSE Carnival 2026 Codex Community Hackathon Preliminary Round**.
