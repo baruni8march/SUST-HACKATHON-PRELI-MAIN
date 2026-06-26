@@ -20,3 +20,9 @@ yarn-error.log*
 pnpm-debug.log*
 
 *.log
+sample-checker.js
+hidden-checker.js
+SUST_Preli_Sample_Cases.json
+.refact/
+backend/node_modules/
+node_modules/
