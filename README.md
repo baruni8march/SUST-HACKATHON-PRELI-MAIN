@@ -228,10 +228,15 @@ Install dependencies:
 npm install
 ```
 
-Create `.env` file from example:
+## Environment Variables
 
-```bash
-cp .env.example .env
+This project does not require any secret environment variables.
+
+The server uses:
+
+```env
+PORT=8000
+NODE_ENV=production
 ```
 
 For Windows PowerShell:
