@@ -1,5 +1,5 @@
 const {CASE_TYPES,SEVERITIES,DEPARTMENTS,EVIDENCE_VERDICTS}=require("../constants/enums");
-const {containsBangla}=require("../utils/text.util");
+const {containsBangla, sanitizeField}=require("../utils/text.util");
 const {ensureSafeText,addCredentialWarning}=require("./safety.service");
 
 const buildResponse=(ticket,classification,evidence)=>{
@@ -153,9 +153,9 @@ const decideConfidence=(caseType,evidence,classification)=>{
 
 const buildAgentSummary=(ticket,caseType,evidence)=>{
     const tx=evidence.relevantTransaction;
-    const id=tx?tx.transaction_id:null;
+    const id=tx?sanitizeField(tx.transaction_id):null;
     const amount=tx&&tx.amount!==null?`${tx.amount} BDT`:null;
-    const counterparty=tx?tx.counterparty:null;
+    const counterparty=tx?sanitizeField(tx.counterparty):null;
 
     if(caseType===CASE_TYPES.PHISHING){
         return "Customer reports a suspicious contact asking for sensitive credentials. Treat as a likely social engineering attempt.";
@@ -218,7 +218,7 @@ const buildAgentSummary=(ticket,caseType,evidence)=>{
 
 const buildNextAction=(ticket,caseType,evidence)=>{
     const tx=evidence.relevantTransaction;
-    const id=tx?tx.transaction_id:null;
+    const id=tx?sanitizeField(tx.transaction_id):null;
 
     if(caseType===CASE_TYPES.PHISHING){
         return "Escalate to fraud_risk immediately. Confirm that the company never asks for PIN, OTP, or password, and log the report for fraud pattern review.";
@@ -277,7 +277,7 @@ const buildNextAction=(ticket,caseType,evidence)=>{
 
 const buildCustomerReply=(ticket,caseType,evidence,bangla)=>{
     const tx=evidence.relevantTransaction;
-    const id=tx?tx.transaction_id:null;
+    const id=tx?sanitizeField(tx.transaction_id):null;
 
     if(bangla){
         return buildBanglaReply(caseType,evidence,id);

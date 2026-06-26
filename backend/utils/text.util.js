@@ -90,6 +90,11 @@ const cleanSentence=(value)=>{
     return String(value||"").replace(/\s+/g," ").trim();
 };
 
+const sanitizeField=(value, maxLength=50)=>{
+    const text = String(value||"").replace(/\s+/g," ").trim();
+    return text.length > maxLength ? text.slice(0, maxLength) : text;
+};
+
 module.exports={
     normalizeDigits,
     normalizeText,
@@ -98,5 +103,6 @@ module.exports={
     extractAmounts,
     normalizeCounterparty,
     extractCounterpartyHints,
-    cleanSentence
+    cleanSentence,
+    sanitizeField
 };
